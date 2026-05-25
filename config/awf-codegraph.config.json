@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0",
+  "graph": {
+    "workspace": ".wi/graph",
+    "runtime": ".wi/runtime",
+    "logs": ".wi/logs",
+    "indexer": "powershell-regex-mvp",
+    "extensions": [".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".json", ".csproj", ".sln", ".props", ".targets"],
+    "excludeDirectories": [".git", ".wi", "node_modules", "bin", "obj", "dist", "build"]
+  },
+  "contextPacket": {
+    "maxSymbols": 80,
+    "maxSummaries": 50,
+    "maxRecommendedFiles": 25
+  },
+  "upgradeHooks": {
+    "dotnetRoslynIndexerCommand": null,
+    "treeSitterIndexerCommand": null,
+    "codeQlDatabaseCommand": null
+  }
+}

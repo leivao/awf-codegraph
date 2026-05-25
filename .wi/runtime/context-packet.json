@@ -1,0 +1,38 @@
+﻿{
+    "generatedUtc":  "2026-05-24T00:40:02.5351809Z",
+    "repoPath":  "C:\\personal\\awf-codegraph-powershell",
+    "task":  null,
+    "query":  "Awf",
+    "changedFiles":  [
+
+                     ],
+    "recommendedFiles":  [
+                             "config/awf-codegraph.config.json"
+                         ],
+    "symbols":  [
+
+                ],
+    "summaries":  [
+                      {
+                          "file":  "config/awf-codegraph.config.json",
+                          "language":  "json",
+                          "kind":  "source",
+                          "summary":  "Contains source code. Key symbols: .",
+                          "generatedBy":  "heuristic",
+                          "generatedUtc":  "2026-05-24T00:39:50.5700977Z"
+                      }
+                  ],
+    "limits":  {
+                   "maxSymbols":  80,
+                   "maxSummaries":  50,
+                   "maxRecommendedFiles":  25
+               },
+    "graphState":  {
+                       "indexer":  "powershell-regex-mvp",
+                       "version":  "0.1.0",
+                       "indexedFileCount":  2,
+                       "changedOnly":  false,
+                       "fileDiscovery":  "rg",
+                       "lastUpdatedUtc":  "2026-05-24T00:39:50.6192879Z"
+                   }
+}

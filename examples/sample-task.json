@@ -1,0 +1,15 @@
+{
+  "id": "TASK-001",
+  "title": "Add validation to student creation",
+  "description": "Add validation before creating a student and preserve the existing API response contract.",
+  "acceptanceCriteria": [
+    "Invalid student creation requests return validation errors.",
+    "Valid student creation requests continue to work.",
+    "Existing persistence behavior is not changed.",
+    "Relevant unit tests are added or updated."
+  ],
+  "constraints": [
+    "Do not refactor unrelated modules.",
+    "Do not change public API contracts unless required."
+  ]
+}

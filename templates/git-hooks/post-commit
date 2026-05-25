@@ -1,0 +1,9 @@
+#!/bin/sh
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$repo_root" ]; then
+  exit 0
+fi
+
+AWF_REPO_ROOT="$repo_root" powershell -NoProfile -ExecutionPolicy Bypass -Command 'try { awf-graph update -ChangedOnly -RepoPath $env:AWF_REPO_ROOT; awf-graph impact -RepoPath $env:AWF_REPO_ROOT } catch { Write-Warning ("AWF post-commit graph refresh failed: " + $_.Exception.Message) }'
+exit 0
