@@ -76,18 +76,22 @@ Implement a local code graph that helps AI coding agents minimize token usage wh
 ```text
 graph init
 graph update
+graph update -Indexer roslyn
 graph context
 agent implementation
 graph update --changed-only
+graph update --changed-only -Indexer roslyn
 graph impact
 review agent
 tests/build
 ```
 
+When `-Indexer roslyn` is selected, AWF keeps the existing PowerShell parser for non-C# files and runs the bundled Roslyn indexer only for `.cs` files. Both outputs are merged back into the same `.wi/graph/*.jsonl` artifacts, and the update fails clearly if no `.sln` can be found for the requested Roslyn pass.
+
 ## Recommended evolution
 
 1. MVP regex parser.
-2. Roslyn for C# symbol and call graph.
+2. Roslyn-backed C# symbol and call graph via `graph update -Indexer roslyn`.
 3. TypeScript compiler API for TS/React.
 4. Tree-sitter for multi-language support.
 5. SQLite store for faster queries.

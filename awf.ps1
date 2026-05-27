@@ -14,7 +14,10 @@ param(
 
     [string]$Query,
 
-    [switch]$VerboseOutput
+    [switch]$VerboseOutput,
+
+    [ValidateSet("powershell", "roslyn")]
+    [string]$Indexer
 )
 
 $ErrorActionPreference = "Stop"
@@ -78,7 +81,12 @@ switch ($Command) {
 
     "update" {
         & $InitializeAwfCodeGraph -RepoPath $resolvedRepo | Out-Null
-        & $UpdateAwfCodeGraph -RepoPath $resolvedRepo -ChangedOnly:$ChangedOnly -VerboseOutput:$VerboseOutput
+        if ($PSBoundParameters.ContainsKey("Indexer")) {
+            & $UpdateAwfCodeGraph -RepoPath $resolvedRepo -ChangedOnly:$ChangedOnly -VerboseOutput:$VerboseOutput -Indexer $Indexer
+        }
+        else {
+            & $UpdateAwfCodeGraph -RepoPath $resolvedRepo -ChangedOnly:$ChangedOnly -VerboseOutput:$VerboseOutput
+        }
         & $WriteAwfSuccess "Code graph updated."
     }
 

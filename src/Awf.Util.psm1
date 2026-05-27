@@ -81,7 +81,7 @@ function Get-AwfDefaultConfig {
             workspace = ".wi/graph"
             runtime = ".wi/runtime"
             logs = ".wi/logs"
-            indexer = "powershell-regex-mvp"
+            indexer = "powershell"
             extensions = @(".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".json", ".csproj", ".sln", ".props", ".targets")
             excludeDirectories = @(".git", ".wi", "node_modules", "bin", "obj", "dist", "build")
         }

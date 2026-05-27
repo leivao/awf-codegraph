@@ -14,7 +14,7 @@ Repo source code
             -> Codex / Claude / Copilot / Ollama
 ```
 
-PowerShell acts as the workflow conductor. The included MVP indexer is implemented in PowerShell and is intentionally dependency-light. It can later be upgraded to call Roslyn, Tree-sitter, CodeQL, or TypeScript compiler APIs.
+PowerShell acts as the workflow conductor. The included MVP indexer is implemented in PowerShell and is intentionally dependency-light. For C# repositories, `awf-graph update -Indexer roslyn` now upgrades only the C# path to the bundled Roslyn console indexer while leaving non-C# files on the PowerShell path.
 
 ## Included components
 
@@ -82,7 +82,9 @@ Then run from any project repo:
 ```powershell
 awf-graph init
 awf-graph update
+awf-graph update -Indexer roslyn
 awf-graph update -ChangedOnly
+awf-graph update -ChangedOnly -Indexer roslyn
 awf-graph impact
 awf-graph context -TaskFile ".\story.json"
 awf-graph query -Query "StudentService"
@@ -156,4 +158,4 @@ If `.github/copilot-instructions.md` already exists, AWF preserves project conte
 
 This package uses regex-based parsing for portability. It is useful as a working graph memory layer, but not a perfect semantic compiler-level graph.
 
-For production-grade .NET precision, use the included Roslyn upgrade path in `docs/roslyn-upgrade-path.md`.
+For production-grade .NET precision, use the bundled mixed update path in `docs/roslyn-upgrade-path.md`. Roslyn indexing requires a discoverable `.sln` and only replaces the C# side of the graph.

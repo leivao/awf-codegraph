@@ -212,6 +212,76 @@ function New-AwfContextPacket {
     return $out
 }
 
+function Get-AwfContextPacketEvaluation {
+    param(
+        [Parameter(Mandatory)][string]$RepoPath,
+        [Parameter(Mandatory)][string]$GraphPath,
+        [Parameter(Mandatory)][string]$Seed,
+        [Parameter(Mandatory)][string]$Query,
+        [int]$Budget = 10
+    )
+
+    try {
+        $packet = Get-AwfGraphContextPacket -GraphPath $GraphPath -Seed $Seed -Budget $Budget
+    }
+    catch {
+        throw "Evaluation helper failed while building the graph packet: $($_.Exception.Message)"
+    }
+
+    try {
+        $packetPath = New-AwfContextPacket -RepoPath $RepoPath -Query $Query
+    }
+    catch {
+        throw "Evaluation helper failed while generating the context packet: $($_.Exception.Message)"
+    }
+
+    try {
+        $packetInfo = Get-Item -LiteralPath $packetPath
+    }
+    catch {
+        throw "Evaluation helper failed while measuring packet size at '$packetPath': $($_.Exception.Message)"
+    }
+
+    try {
+        $baseline = @(Search-AwfCodeGraph -RepoPath $RepoPath -Query $Query)
+    }
+    catch {
+        throw "Evaluation helper failed while computing the baseline query count: $($_.Exception.Message)"
+    }
+
+    $contextFileCount = 0
+    $relatedTestCount = 0
+    $topFiles = New-Object System.Collections.Generic.List[string]
+    $topTests = New-Object System.Collections.Generic.List[string]
+
+    foreach ($contextFile in $packet.contextFiles) {
+        $contextFileCount++
+        if ($topFiles.Count -lt 5 -and $contextFile.path) {
+            $topFiles.Add([string]$contextFile.path)
+        }
+    }
+
+    foreach ($relatedTest in $packet.relatedTests) {
+        $relatedTestCount++
+        if ($topTests.Count -lt 5 -and $relatedTest.path) {
+            $topTests.Add([string]$relatedTest.path)
+        }
+    }
+
+    [pscustomobject]@{
+        seed = $Seed
+        query = $Query
+        baselineCount = $baseline.Count
+        contextFileCount = $contextFileCount
+        relatedTestCount = $relatedTestCount
+        packetBytes = [int64]$packetInfo.Length
+        packetPath = $packetPath
+        topFiles = @($topFiles)
+        topTests = @($topTests)
+        packet = $packet
+    }
+}
+
 Export-ModuleMember -Function @(
     "New-AwfContextModel",
     "New-AwfContextPacket"
